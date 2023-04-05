@@ -107,7 +107,7 @@
       const textField = document.getElementById("text-field");
 
       lootBtn.addEventListener("click", () => {
-        console.log(textField.value);
+        mp.trigger('lootItem', textField.value)
       });
     </script>
   </body>
