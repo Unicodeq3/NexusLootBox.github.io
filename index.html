@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Перетягуваний прямокутник</title>
+    <style>
+      #rectangle {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  background-color: blue;
+  color: white;
+  text-align: center;
+  line-height: 100px;
+  cursor: move;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#text-field {
+  display: block;
+  margin: 20px auto 0 auto;
+  width: 80%;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#loot-btn {
+  display: block;
+  margin: 10px auto 0 auto;
+  background-color: white;
+  color: blue;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#loot-btn:hover {
+  background-color: blue;
+  color: white;
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="rectangle">
+      <input id="text-field" type="text" placeholder="Item id">
+      <button id="loot-btn">Loot</button>
+    </div>
+
+    <script>
+      // Код для перетягування прямокутника
+      const rectangle = document.getElementById("rectangle");
+      let isDragging = false;
+      let currentX;
+      let currentY;
+      let initialX;
+      let initialY;
+      let xOffset = 0;
+      let yOffset = 0;
+
+      rectangle.addEventListener("mousedown", dragStart);
+      rectangle.addEventListener("mouseup", dragEnd);
+      rectangle.addEventListener("mousemove", drag);
+
+      function dragStart(e) {
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+
+        if (e.target === rectangle) {
+          isDragging = true;
+        }
+      }
+
+      function dragEnd(e) {
+        initialX = currentX;
+        initialY = currentY;
+
+        isDragging = false;
+      }
+
+      function drag(e) {
+        if (isDragging) {
+          e.preventDefault();
+
+          currentX = e.clientX - initialX;
+          currentY = e.clientY - initialY;
+
+          xOffset = currentX;
+          yOffset = currentY;
+
+          setTranslate(currentX, currentY, rectangle);
+        }
+      }
+
+      function setTranslate(xPos, yPos, el) {
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+      }
+
+      // Код для виводу тексту в консоль
+      const lootBtn = document.getElementById("loot-btn");
+      const textField = document.getElementById("text-field");
+
+      lootBtn.addEventListener("click", () => {
+        console.log(textField.value);
+      });
+    </script>
+  </body>
+</html>
